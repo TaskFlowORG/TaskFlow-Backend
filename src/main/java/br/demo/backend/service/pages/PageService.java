@@ -5,6 +5,7 @@ import br.demo.backend.model.dtos.relations.TaskPageGetDTO;
 import br.demo.backend.model.relations.TaskOrdered;
 import br.demo.backend.model.relations.TaskPage;
 import br.demo.backend.repository.relations.TaskPageRepository;
+import br.demo.backend.service.properties.PropertyService;
 import br.demo.backend.utils.AutoMapper;
 import br.demo.backend.service.properties.DefaultPropsService;
 import br.demo.backend.utils.IdProjectValidation;
@@ -57,6 +58,7 @@ public class PageService {
     private AutoMapper<TaskCanvas> autoMapperTaskCanvas;
     private AutoMapper<Page> autoMapperOther;
     private AutoMapper<TaskOrdered> autoMapperTaskOrdered;
+    private PropertyService propertyService;
 
     public OrderedPageGetDTO updatePropertiesOrdering(Property prop, Long pageId, Long projectId) {
         OrderedPage page = orderedPageRepository.findById(pageId).get();
@@ -151,10 +153,11 @@ public class PageService {
     public void delete(Long id, Long projectId) {
         Page page = pageRepository.findById(id).get();
         validation.ofObject(projectId, page.getProject());
-        page.getProperties().stream().forEach(p -> {
-            p.getPages().remove(page);
-            propertyRepository.save(p);
-        });
+        page.getProperties().forEach(prop -> propertyService.disassociate(prop));
+        if (page instanceof OrderedPage pageOrdered) {
+            pageOrdered.setPropertyOrdering(null);
+            pageRepository.save(pageOrdered);
+        }
         pageRepository.deleteById(id);
     }
 
