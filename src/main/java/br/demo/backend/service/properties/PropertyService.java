@@ -142,7 +142,7 @@ public class PropertyService {
         return updateGeneric(propertyDTO, patching, autoMapperSelect, selectRepository, new Select(), projectId);
     }
 
-    public void delete(Long id, Long projectId) {
+    public void delete(Long id, Long projectId, Boolean isDeletingOther) {
         Property property = propertyRepository.findById(id).get();
         if(property.getProject() == null){
             try {
@@ -152,7 +152,7 @@ public class PropertyService {
         }else{
         validation.ofObject(projectId, property.getProject());
         }
-        if (validateCanBeDeleted(property)) {
+        if (validateCanBeDeleted(property) || isDeletingOther) {
             orderedPageRepository.findAllByPropertyOrdering_Id(property.getId())
                     .forEach(p -> {
                         List<TypeOfProperty> types = getPossibleSubstitutesTypes(p.getType());

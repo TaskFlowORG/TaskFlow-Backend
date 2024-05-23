@@ -174,8 +174,6 @@ public class ProjectService {
 
     public void delete(Long id) {
         Project project = projectRepository.findById(id).get();
-        project.getValues().forEach(p -> propertyService.delete(p.getProperty().getId(), project.getId()));
-        project.getProperties().forEach(p -> propertyService.delete(p.getId(), project.getId()));
         project.getPages().forEach(p -> {
             p.getProperties().forEach(prop -> propertyService.disassociate(prop));
             if (p instanceof OrderedPage page) {
@@ -183,16 +181,18 @@ public class ProjectService {
                 pageRepository.save(p);
             }
         });
+        project.getValues().forEach(p -> propertyService.delete(p.getProperty().getId(), project.getId(), true));
+        project.getProperties().forEach(p -> propertyService.delete(p.getId(), project.getId(),  true));
         Collection<Permission> permissions = permissionRepositoru.findByProject(project);
         permissions.forEach(p -> {
             Collection<User> users = userRepository.findAllByPermissions_Project(project);
             Collection<Group> groups = groupRepository.findGroupsByPermissions_Project(project);
             users.forEach(u -> {
-                u.setPermissions(new ArrayList<>(u.getPermissions().stream().filter(per -> per.getProject().getId().equals(id)).toList()));
+                u.setPermissions(new ArrayList<>(u.getPermissions().stream().filter(per -> !per.getProject().getId().equals(id)).toList()));
                 userRepository.save(u);
             });
             groups.forEach(u -> {
-                u.setPermissions(new ArrayList<>(u.getPermissions().stream().filter(per -> per.getProject().getId().equals(id)).toList()));
+                u.setPermissions(new ArrayList<>(u.getPermissions().stream().filter(per -> !per.getProject().getId().equals(id)).toList()));
                 groupRepository.save(u);
             });
             permissionRepositoru.deleteById(p.getId());

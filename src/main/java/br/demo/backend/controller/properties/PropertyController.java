@@ -90,7 +90,7 @@ public class PropertyController {
     //Precisa ter permissão de delete no projeto
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id, @PathVariable Long projectId){
-        propertyService.delete(id, projectId);
+        propertyService.delete(id, projectId, false);
     }
 
 
