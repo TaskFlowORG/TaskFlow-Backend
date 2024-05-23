@@ -199,6 +199,10 @@ public class ProjectService {
             });
             permissionRepositoru.deleteById(p.getId());
         });
+        project.setProperties(new ArrayList<>());
+        project.setPages(new ArrayList<>());
+        project.setValues(new ArrayList<>());
+        projectRepository.save(project);
         projectRepository.deleteById(id);
     }
 
