@@ -174,6 +174,8 @@ public class ProjectService {
 
     public void delete(Long id) {
         Project project = projectRepository.findById(id).get();
+        project.setLogs(new ArrayList<>());
+        projectRepository.save(project);
         project.getPages().forEach(p -> {
             p.getProperties().forEach(prop -> propertyService.disassociate(prop));
             if (p instanceof OrderedPage page) {
@@ -196,9 +198,7 @@ public class ProjectService {
                 groupRepository.save(u);
             });
             permissionRepositoru.deleteById(p.getId());
-
         });
-
         projectRepository.deleteById(id);
     }
 
