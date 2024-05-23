@@ -24,6 +24,7 @@ import java.util.function.Supplier;
 @AllArgsConstructor
 public class IsOwnerOrMemberAuthorization implements AuthorizationManager<RequestAuthorizationContext> {
     private final GroupRepository groupRepository;
+    private final ProjectRepository projectRepository;
 
     @Override
     public void verify(Supplier<Authentication> authentication, RequestAuthorizationContext object) {
@@ -47,6 +48,10 @@ public class IsOwnerOrMemberAuthorization implements AuthorizationManager<Reques
         } else {
             String projectId = object.getVariables().get("projectId");
             List<String> uriMemberWithoutPermission = List.of("/project/" + projectId + "/set-now");
+            Project project = projectRepository.findById(Long.parseLong(projectId)).get();
+            if (project.getOwner().equals(userDatailEntity.getUser())) {
+                decision = true;
+            }
             for (GrantedAuthority simple :
                     userDatailEntity.getAuthorities()) {
                 if (simple.getAuthority().contains("Project_" + projectId + "_") &&
