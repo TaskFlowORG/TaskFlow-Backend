@@ -181,6 +181,7 @@ public class ProjectService {
             if (p instanceof OrderedPage page) {
                 page.setPropertyOrdering(null);
                 pageRepository.save(p);
+                pageRepository.deleteById(p.getId());
             }
         });
         project.getValues().forEach(p -> propertyService.delete(p.getProperty().getId(), project.getId(), true));
