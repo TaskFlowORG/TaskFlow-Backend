@@ -9,6 +9,7 @@ import br.demo.backend.repository.UserRepository;
 import br.demo.backend.security.entity.UserDatailEntity;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.method.P;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.core.Authentication;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Component;
 
 import java.beans.Transient;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 @Component
@@ -48,8 +50,11 @@ public class IsOwnerOrMemberAuthorization implements AuthorizationManager<Reques
         } else {
             String projectId = object.getVariables().get("projectId");
             List<String> uriMemberWithoutPermission = List.of("/project/" + projectId + "/set-now");
-            Project project = projectRepository.findById(Long.parseLong(projectId)).get();
-            if (project.getOwner().equals(userDatailEntity.getUser())) {
+            Optional<Project> project = projectRepository.findById(Long.parseLong(projectId));
+            if(project.isEmpty()){
+                return new AuthorizationDecision(false);
+            }
+            if (project.get().getOwner().equals(userDatailEntity.getUser())) {
                 decision = true;
             }
             for (GrantedAuthority simple :
