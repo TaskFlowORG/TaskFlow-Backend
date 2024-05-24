@@ -187,6 +187,10 @@ public class ModelToGetDTO {
             task.setProperties(obj.getProperties().stream().map(ModelToGetDTO::tranform).toList());
         } catch (NullPointerException ignore) {
         }
+        try {
+            task.setDependencies(obj.getDependencies().stream().map(ModelToGetDTO::tranform).toList());
+        } catch (NullPointerException ignore) {
+        }
         return task;
     }
 

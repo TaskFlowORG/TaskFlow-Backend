@@ -4,6 +4,7 @@ package br.demo.backend.service.tasks;
 import br.demo.backend.exception.TaskAlreadyCompleteException;
 import br.demo.backend.exception.TaskAlreadyDeletedException;
 import br.demo.backend.google.service.GoogleCalendarService;
+import br.demo.backend.model.Permission;
 import br.demo.backend.model.dtos.chat.get.MessageGetDTO;
 import br.demo.backend.model.dtos.properties.DateGetDTO;
 import br.demo.backend.model.dtos.relations.PropertyValueGetDTO;
@@ -96,6 +97,7 @@ public class TaskService {
         return taskGetDTO;
     }
 
+
     private void addPropertiesAtANewTask(Page page, Task taskEmpty) {
         //get the task's page's and task's project's properties
         if (taskEmpty.getProperties() == null) {
@@ -146,7 +148,7 @@ public class TaskService {
                              Long projectId, Boolean isUserRequest) {
         Task oldTask = taskRepository.findById(taskDTO.getId()).get();
 
-        if(isUserRequest){
+        if (isUserRequest) {
             if (oldTask.getDeleted()) throw new TaskAlreadyDeletedException();
             if (oldTask.getCompleted()) throw new TaskAlreadyCompleteException();
         }
@@ -186,7 +188,7 @@ public class TaskService {
             Collection<PropertyValueGetDTO> valuesdates = dates.stream().map(d ->
             {
                 if (d.getValue().getValue() == null) return d;
-                DateWithGoogle value = dateWithGoogleRepository.findById( ((DateWithGoogle) d.getValue().getValue()).getId()).get();
+                DateWithGoogle value = dateWithGoogleRepository.findById(((DateWithGoogle) d.getValue().getValue()).getId()).get();
                 if (value.getIdGoogle().isEmpty()) {
                     notExistsInGoogle(users, task, value);
                 } else {
@@ -196,24 +198,24 @@ public class TaskService {
             }).toList();
             ArrayList<PropertyValueGetDTO> values = new ArrayList<>(task.getProperties().stream().filter(prop ->
                     !prop.getProperty().getType().equals(TypeOfProperty.DATE) ||
-                            !((DateGetDTO)prop.getProperty()).getDeadline()).toList());
+                            !((DateGetDTO) prop.getProperty()).getDeadline()).toList());
             values.addAll(valuesdates);
             task.setProperties(values);
-        }catch (NullPointerException ignore){
+        } catch (NullPointerException ignore) {
             return;
         }
 
 
     }
 
-    private void deleteFromCalendar(Task task){
+    private void deleteFromCalendar(Task task) {
         List<PropertyValue> dates = task.getProperties().stream().filter(prop ->
                 prop.getProperty().getType().equals(TypeOfProperty.DATE) &&
-                        ( (Date)prop.getProperty()).getDeadline()).toList();
+                        ((Date) prop.getProperty()).getDeadline()).toList();
         dates.forEach(d ->
         {
             DateWithGoogle value = (DateWithGoogle) d.getValue().getValue();
-            if (value == null) return ;
+            if (value == null) return;
             if (!value.getIdGoogle().isEmpty()) {
                 try {
                     googleCalendarService.delete(value.getIdGoogle());
@@ -227,10 +229,6 @@ public class TaskService {
             }
         });
     }
-
-
-
-
 
 
     private void alreadyExistisInGoogle(Collection<OtherUsersDTO> u, TaskGetDTO t, DateWithGoogle value) {
@@ -294,10 +292,29 @@ public class TaskService {
 
     }
 
+    public Collection<TaskGetDTO> findDependencies(Long id, Long pageId){
+        Collection<Task> tasks =   taskRepository.findAllByDependencies(taskRepository.findById(id).get());
+        Page page = pageRepositorry.findById(pageId).get();
+
+         return page.getTasks().stream().filter(taskPage -> tasks.stream().noneMatch(task -> taskPage.getTask().getId() == task.getId())).map(TaskPage::getTask).map(ModelToGetDTO::tranform).toList() ;
+    }
+
     public void deletePermanent(Long id, Long projectId) {
         Task task = taskRepository.findById(id).get();
         Page page = pageRepositorry.findByTasks_Task(task).stream().findFirst().get();
         validation.ofObject(projectId, page.getProject());
+        task.setDependencies(new ArrayList<>());
+//        System.out.println(task);
+        Collection<Task> dependy = taskRepository.findAllByDependencies(task);
+        System.out.println(dependy.size());
+        dependy.stream().forEach(task1 -> {
+            List<Task> dependenciesCopy = new ArrayList<>(task1.getDependencies());
+            dependenciesCopy.removeIf(t -> t.getDependencies().stream().noneMatch(task2 -> Objects.equals(task2.getId(), t.getId())));
+
+            task1.setDependencies(dependenciesCopy);
+
+        });
+        taskRepository.saveAll(dependy);
         taskPageRepository.deleteAll(taskPageRepository.findAllByTask_Id(id));
         taskRepository.deleteById(id);
     }
@@ -343,7 +360,7 @@ public class TaskService {
             task.setDateCompleted(OffsetDateTime.now());
             task.setCompleted(true);
             task.setWaitingRevision(false);
-          
+
             deleteFromCalendar(task);
 
             //generate the logs and notifications

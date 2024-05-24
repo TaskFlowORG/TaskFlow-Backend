@@ -14,5 +14,6 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
      Task findByPropertiesContaining(PropertyValue prop);
     public Collection<Task> findTasksByPropertiesContaining(PropertyValue prop);
+    Collection<Task> findAllByDependencies(Task task);
 
 }

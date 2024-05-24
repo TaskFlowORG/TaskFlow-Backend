@@ -49,6 +49,11 @@ public class TaskController {
         return  propertyValueService.getTasksToday(OffsetDateTime.now());
     }
 
+    @GetMapping("/findDependencies/{id}/{pageId}")
+    public Collection<TaskGetDTO> findDependencies(@PathVariable Long id,@PathVariable Long pageId){
+        return  taskService.findDependencies(id, pageId);
+    }
+
 
     @DeleteMapping("/project/{projectId}/{id}")
     public void delete(@PathVariable Long id, @PathVariable Long projectId){

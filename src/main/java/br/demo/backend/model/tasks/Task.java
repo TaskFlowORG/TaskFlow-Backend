@@ -28,6 +28,8 @@ public class Task implements ILogged {
     private Long id;
     //Patch
     private String name;
+    @ManyToMany(cascade = CascadeType.ALL)
+    private Collection<Task> dependencies;
 
 
     private OffsetDateTime dateDeleted;

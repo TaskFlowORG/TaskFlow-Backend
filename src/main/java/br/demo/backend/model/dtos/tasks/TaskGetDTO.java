@@ -3,6 +3,7 @@ package br.demo.backend.model.dtos.tasks;
 
 import br.demo.backend.model.dtos.chat.get.MessageGetDTO;
 import br.demo.backend.model.dtos.relations.PropertyValueGetDTO;
+import br.demo.backend.model.tasks.Task;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,6 +27,7 @@ public class TaskGetDTO {
     private Collection<PropertyValueGetDTO> properties;
 
     private Collection<LogGetDTO> logs;
+    private Collection<TaskGetDTO> dependencies;
 
 
     private Collection<MessageGetDTO> comments;
