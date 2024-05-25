@@ -12,9 +12,9 @@ import lombok.NoArgsConstructor;
 public class TaskCanvasGetDTO extends TaskPageGetDTO {
 
     //Patch
-    private Double x = 100.0;
+    private Double x = 500.0;
     //Patch
-    private Double y = 100.0;
+    private Double y = 500.0;
 
 
 }
