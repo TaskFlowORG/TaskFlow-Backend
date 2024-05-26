@@ -180,9 +180,8 @@ public class ChatService {
         Message messageWithId = getmessageWithId(chat, message);
         //generating the notification for each user of the chat
         notificationService.generateNotification(TypeOfNotification.CHAT, messageWithId.getId(), chat.getId());
-        simpMessagingTemplate.convertAndSend("/chat/" + chat.getId(), messageWithId);
-
         Chat finalChat = chat;
+        simpMessagingTemplate.convertAndSend("/chat/" + chat.getId(), ModelToGetDTO.tranform(chat.getMessages().stream().filter(m -> m.getId().equals(messageWithId.getId())).findFirst().get()));
         if (chat.getType().equals(TypeOfChat.PRIVATE)) {
             simpMessagingTemplate.convertAndSend("/chats/" + messageWithId.getSender().getId(), privateToGetDTO((ChatPrivate) finalChat, usernameLogged));
             message.getDestinations().forEach(d -> simpMessagingTemplate.convertAndSend("/chats/" + d.getUser().getId(), privateToGetDTO((ChatPrivate) finalChat, d.getUser().getUserDetailsEntity().getUsername())));
