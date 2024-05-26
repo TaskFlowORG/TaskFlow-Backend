@@ -245,7 +245,6 @@ public class TaskService {
 
     private void notExistsInGoogle(Collection<OtherUsersDTO> u, TaskGetDTO t, DateWithGoogle value) {
         try {
-            System.out.println("NOT EXISTS");
             value.setIdGoogle(googleCalendarService.create(u, t, value.getDateTime()));
             dateWithGoogleRepository.save(value);
         } catch (IOException e) {

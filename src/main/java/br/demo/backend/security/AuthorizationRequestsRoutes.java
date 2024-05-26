@@ -42,8 +42,6 @@ public class AuthorizationRequestsRoutes implements AuthorizationManager<Request
         boolean decision = false;
         Project project = projectRepository.findById(projectId).get();
         Collection<SimpleGroupGetDTO> groups = groupService.findGroupsByAProject(projectId);
-        System.out.println(groups);
-        System.out.println(userDatailEntity.getUsername());
         if(groups.stream().anyMatch(g -> userService.findOne(g.getOwnerUsername()).getId().equals(userDatailEntity.getUser().getId()))){
             return new AuthorizationDecision(true);
         }else if (project.getOwner().getId().equals(userDatailEntity.getUser().getId())) {

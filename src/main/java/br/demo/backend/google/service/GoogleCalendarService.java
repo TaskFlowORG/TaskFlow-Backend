@@ -55,12 +55,10 @@ public class GoogleCalendarService {
 
         String calendarId = "primary";
         event = service.events().insert(calendarId, event).execute();
-        System.out.println("event" + event);
         return event.getId();
     }
 
     private static Event createEvent(TaskGetDTO task, OffsetDateTime dateTime, Collection<OtherUsersDTO> users) {
-        System.out.println(dateTime);
         Event event = new Event()
                 .setSummary(task.getName());
 
@@ -83,7 +81,6 @@ public class GoogleCalendarService {
                 .setTimeZone(TimeZone.getTimeZone(dateTime.toZonedDateTime().getZone()).getID());
         event.setEnd(end);
 
-        System.out.println("start "+ startDateTime  + " end " + endDateTime);
 
         String[] recurrence = new String[] {"RRULE:FREQ=DAILY;COUNT=1"};
         event.setRecurrence(Arrays.asList(recurrence));
@@ -109,7 +106,6 @@ public class GoogleCalendarService {
         Event event = createEvent(task, dateTime, users);
         String calendarId = "primary";
         event = service.events().update(calendarId, oldId,  event).execute();
-        System.out.println("event" + event);
         return event.getId();
     }
 

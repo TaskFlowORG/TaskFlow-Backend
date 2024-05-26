@@ -27,8 +27,6 @@ public class TaskController {
 
     @PutMapping("/project/{projectId}")
     public TaskGetDTO upDate(@RequestBody Task task, @PathVariable Long projectId){
-        System.out.println("adasdadad");
-        task.getPropertiesValues().forEach(p-> System.out.println(p.getValue().getValue()));
         return taskService.update(task, false, projectId, true);
     }
 

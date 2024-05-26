@@ -163,7 +163,6 @@ public class PropertyService {
                     });
             //this disassociate the property from the tasks
             disassociate(property);
-            System.out.println(property);
             propertyRepository.deleteById(property.getId());
         } else {
             throw new PropertyCantBeDeletedException();

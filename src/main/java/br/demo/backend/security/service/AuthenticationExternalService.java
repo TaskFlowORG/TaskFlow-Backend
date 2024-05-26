@@ -252,7 +252,6 @@ public class AuthenticationExternalService {
                 newCookie = loginWithGoogle(request, response, email);
             }
             response.addCookie(newCookie); // Add the cookie to the response
-            System.out.println("RESPONSE");
             response.sendRedirect("http://localhost:3000/" + returnUsername);
         }
     }
