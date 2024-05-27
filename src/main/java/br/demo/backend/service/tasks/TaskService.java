@@ -145,11 +145,12 @@ public class TaskService {
     public TaskGetDTO update(Task taskDTO, Boolean patching,
                              Long projectId, Boolean isUserRequest) {
         Task oldTask = taskRepository.findById(taskDTO.getId()).get();
-
+        int oldTaskLogs = oldTask.getLogs().size();
         if(isUserRequest){
             if (oldTask.getDeleted()) throw new TaskAlreadyDeletedException();
             if (oldTask.getCompleted()) throw new TaskAlreadyCompleteException();
         }
+
 
         Page page = pageRepositorry.findByTasks_Task(oldTask).stream().findFirst().get();
         validation.ofObject(projectId, page.getProject());
@@ -161,7 +162,7 @@ public class TaskService {
         keepFields(task, oldTask);
         logService.generateLog(Action.UPDATE, task, oldTask);
 
-        if (task.getLogs().size() != oldTask.getLogs().size()) {
+        if (task.getLogs().size() != oldTaskLogs) {
             notificationService.generateNotification(TypeOfNotification.CHANGETASK, task.getId(), null);
         }
         TaskGetDTO taskGetDTO = ModelToGetDTO.tranform(taskRepository.save(task));
@@ -170,7 +171,6 @@ public class TaskService {
 
     }
 
-    //TODO: quando ele mudar os users da task
     private void generateGoogleCalendar(TaskGetDTO task) {
         try {
             List<PropertyValueGetDTO> list = task.getProperties().stream()

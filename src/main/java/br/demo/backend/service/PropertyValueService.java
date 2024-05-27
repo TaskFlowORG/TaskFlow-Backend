@@ -116,7 +116,7 @@ public class PropertyValueService {
     }
 
     private Boolean testIfIsTodayBasesInConfigs(PropertyValue p, User user, OffsetDateTime date) {
-        if (p.getProperty() instanceof Date property) {
+        if (p.getProperty() instanceof Date property &&  p.getValue().getValue() != null) {
             Boolean deadlineOrScheduling;
             if (user.getConfiguration().getInitialPageTasksPerDeadline()) {
                 deadlineOrScheduling = property.getDeadline();
