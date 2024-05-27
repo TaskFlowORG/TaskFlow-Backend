@@ -93,7 +93,7 @@ public class GroupService {
         userRepository.save(user);
         userRepository.save(group.getOwner());
         group.setOwner(user);
-
+        group.setUsers(new ArrayList<>(group.getUsers().stream().filter(u -> !u.getId().equals(user.getId())).toList()));
         return ModelToGetDTO.tranform(groupRepository.save(group));
     }
 

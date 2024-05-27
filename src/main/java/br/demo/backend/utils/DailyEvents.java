@@ -37,7 +37,8 @@ public class DailyEvents {
     private TaskService taskService;
     private PageRepository pageRepository;
 
-    @Scheduled(cron = "0 0 0 * * *")
+//    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(cron = "0 * * * * *")
     @Transactional
 //    Check every UTC 00:00 properties like scheduling and deadlines
     public void checkDaily() {
@@ -106,6 +107,7 @@ public class DailyEvents {
 
     @Transactional
     public void generateNotificationsDates(ILogged obj) {
+
         obj.getPropertiesValues().forEach(property -> {
             if(!property.getProperty().getType().equals(TypeOfProperty.DATE)) return;
             if(property.getValue().getValue() == null) return;

@@ -1,10 +1,13 @@
 package br.demo.backend.service;
 
 import br.demo.backend.exception.AlreadyAceptException;
+import br.demo.backend.interfaces.ILogged;
 import br.demo.backend.model.*;
 import br.demo.backend.model.chat.Message;
 import br.demo.backend.model.enums.TypeOfNotification;
+import br.demo.backend.model.enums.TypeOfProperty;
 import br.demo.backend.model.pages.Page;
+import br.demo.backend.model.relations.PropertyValue;
 import br.demo.backend.model.tasks.Task;
 import br.demo.backend.repository.*;
 import br.demo.backend.repository.chat.MessageRepository;
@@ -166,8 +169,11 @@ public class NotificationService {
 
     private void generateForEachUserDeadlineAndSchedule(TypeOfNotification type, Long typeObj,
                                                         Project project, Task task, Page page){
-        Collection<User> users = userRepository.findAllByPermissions_Project(project);
-        users.add(project.getOwner());
+        ILogged obj = typeObj == 0 ? task : project;
+        List<PropertyValue> usersProps = obj.getPropertiesValues().stream().filter(prop -> prop.getProperty().getType().equals(TypeOfProperty.USER)).toList();
+        //propValue has an value, and value has another value, and this value is a users list
+        Collection<User> usersValue = usersProps.stream().map(prop -> (Collection<User>)prop.getValue().getValue()).flatMap(Collection::stream).toList();
+        Collection<User> users = usersValue.stream().distinct().toList();
         users.forEach(user -> {
             if (!verifyIfHeWantsThisNotification(type, user)) return;
             if(typeObj == 0){
