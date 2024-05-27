@@ -37,8 +37,7 @@ public class DailyEvents {
     private TaskService taskService;
     private PageRepository pageRepository;
 
-//    @Scheduled(cron = "0 0 0 * * *")
-    @Scheduled(cron = "0 * * * * *")
+    @Scheduled(cron = "0 0 0 * * *")
     @Transactional
 //    Check every UTC 00:00 properties like scheduling and deadlines
     public void checkDaily() {
