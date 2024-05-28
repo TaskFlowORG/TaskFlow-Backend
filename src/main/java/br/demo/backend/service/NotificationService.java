@@ -61,6 +61,11 @@ public class NotificationService {
     private void generateInviteProject(Long idProject, Long idGroup, TypeOfNotification type) {
         Project project = projectRepository.findById(idProject).get();
         Group group = groupRepository.findById(idGroup).get();
+        if(group.getOwner().getId().equals(project.getOwner().getId())){
+            testAlreadyAceptToProject(group, project);
+            addAGroupToAProject(project, group);
+            return;
+        }
         Notification notify = notificationRepository.save(new Notification(null, project.getName(), type, "/"+group.getOwner().getUserDetailsEntity().getUsername()+"/group/"+
                 idGroup, group.getOwner(), false,  project.getId(), group.getId()));
         simpMessagingTemplate.convertAndSend("/notifications/"+group.getOwner().getId(), notify);
@@ -252,6 +257,10 @@ public class NotificationService {
         Group group = groupRepository.findById(notification.getObjId()).get();
         Project project = projectRepository.findById(notification.getAuxObjId()).get();
         testAlreadyAceptToProject(group, project);
+        addAGroupToAProject(project, group);
+    }
+
+    private void addAGroupToAProject(Project project, Group group) {
         Permission permission = permissionRepository.findByProjectAndIsDefault(project, true);
         group.getPermissions().add(permission);
         Collection<User> users = groupRepository.save(group).getUsers();
