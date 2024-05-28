@@ -18,7 +18,7 @@ import java.time.OffsetDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "tb_log")
+@Table(name = "log")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Log {
     @EqualsAndHashCode.Include

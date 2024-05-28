@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "tb_task_ordered")
+@Table(name = "task_ordered")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

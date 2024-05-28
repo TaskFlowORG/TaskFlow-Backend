@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Table(name = "tb_configuration")
+@Table(name = "configuration")
 public class Configuration {
 
     @Id

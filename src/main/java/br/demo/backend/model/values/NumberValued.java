@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @Entity
-@Table(name = "tb_valued_number")
+@Table(name = "valued_number")
 public class NumberValued extends Value{
     private Double number;
 

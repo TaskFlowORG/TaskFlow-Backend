@@ -17,7 +17,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @Entity
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "tb_chat_private")
+@Table(name = "chat_private")
 public class ChatPrivate extends Chat  {
 
     //Always two

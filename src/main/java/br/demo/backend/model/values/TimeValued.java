@@ -15,7 +15,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @Entity
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "tb_valued_time")
+@Table(name = "valued_time")
 public class TimeValued extends Value {
     @OneToOne(cascade = CascadeType.ALL)
     @EqualsAndHashCode.Include

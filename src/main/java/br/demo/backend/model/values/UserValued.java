@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "tb_valued_user")
+@Table(name = "valued_user")
 public class UserValued extends Value{
 
     @ManyToMany

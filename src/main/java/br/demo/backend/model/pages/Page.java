@@ -18,7 +18,7 @@ import java.util.Collection;
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
-@Table(name = "tb_page")
+@Table(name = "page")
 @Inheritance(strategy = InheritanceType.JOINED)
 //CALENDAR
 public class Page implements IHasProperties {

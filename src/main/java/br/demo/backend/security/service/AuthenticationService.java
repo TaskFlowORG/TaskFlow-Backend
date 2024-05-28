@@ -34,8 +34,10 @@ public class AuthenticationService implements UserDetailsService {
 
         Optional<User> userOptional = userRepository.findByUserDetailsEntity_Username(username);
         if (userOptional.isPresent()) {
-            userOptional.get().getUserDetailsEntity().setEnabled(true);
-            return userOptional.get().getUserDetailsEntity();
+            User userGet = userOptional.get();
+            userGet.getUserDetailsEntity().setEnabled(true);
+            userRepository.save(userGet);
+            return userGet.getUserDetailsEntity();
         }else {
             throw new UsernameNotFoundException("User not found");
         }
@@ -45,8 +47,10 @@ public class AuthenticationService implements UserDetailsService {
 
         Optional<User> userOptional = userRepository.findByUserDetailsEntity_UsernameGitHub(username);
         if (userOptional.isPresent()) {
-            userOptional.get().getUserDetailsEntity().setEnabled(true);
-            return userOptional.get().getUserDetailsEntity();
+            User userGet = userOptional.get();
+            userGet.getUserDetailsEntity().setEnabled(true);
+            userRepository.save(userGet);
+            return userGet.getUserDetailsEntity();
         }else {
             throw new UsernameNotFoundException("User not found");
         }
@@ -55,8 +59,10 @@ public class AuthenticationService implements UserDetailsService {
     public UserDetails loadByEmail(String email) throws UsernameNotFoundException{
         Optional<User> userOptional = userRepository.findByMail(email);
         if (userOptional.isPresent()) {
-            userOptional.get().getUserDetailsEntity().setEnabled(true);
-            return userOptional.get().getUserDetailsEntity();
+            User userGet = userOptional.get();
+            userGet.getUserDetailsEntity().setEnabled(true);
+            userRepository.save(userGet);
+            return userGet.getUserDetailsEntity();
         }else {
             throw new UsernameNotFoundException("User not found");
         }

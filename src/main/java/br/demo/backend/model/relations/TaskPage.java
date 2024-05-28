@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.mapping.Collection;
 
 @Entity
-@Table(name = "tb_task_page")
+@Table(name = "task_page")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

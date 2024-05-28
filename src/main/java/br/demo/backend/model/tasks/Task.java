@@ -17,7 +17,7 @@ import java.util.Collection;
 @Entity
 @Data
 @AllArgsConstructor
-@Table(name = "tb_task")
+@Table(name = "task")
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 

@@ -16,7 +16,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @Entity
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "tb_date")
+@Table(name = "date")
 public class Date extends Property {
 
     private Boolean canBePass = false;

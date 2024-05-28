@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "tb_valued_multi_option")
+@Table(name = "valued_multi_option")
 public class MultiOptionValued extends Value{
 
     @ManyToMany

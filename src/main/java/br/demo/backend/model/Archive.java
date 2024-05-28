@@ -13,7 +13,7 @@ import java.io.IOException;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "tb_archive")
+@Table(name = "archive")
 public class Archive {
 
     @Id

@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "tb_chat_group")
+@Table(name = "chat_group")
 public class ChatGroup extends Chat {
 
     @ManyToOne

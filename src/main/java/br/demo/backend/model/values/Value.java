@@ -17,7 +17,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Table(name = "tb_value")
+@Table(name = "value")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Value {
     @Id

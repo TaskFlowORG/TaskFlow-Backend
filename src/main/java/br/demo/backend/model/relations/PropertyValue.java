@@ -24,7 +24,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Table(name = "tb_property_value")
+@Table(name = "property_value")
 @JsonDeserialize(using = DeserializerValue.class)
 public class PropertyValue {
     @Id

@@ -70,8 +70,6 @@ public class ProjectService {
     public ProjectGetDTO updateOwner(OtherUsersDTO userDto, Long projectId) {
         Project project = projectRepository.findById(projectId).get();
         User user = userRepository.findById(userDto.getId()).get();
-        Permission defaultPermission = permissionRepositoru.findByProjectAndIsDefault(project, true);
-        project.getOwner().getPermissions().add(defaultPermission);
         userRepository.save(project.getOwner());
         project.setOwner(user);
         //generate logs
