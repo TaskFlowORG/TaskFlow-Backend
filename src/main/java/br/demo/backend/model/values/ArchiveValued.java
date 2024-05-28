@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "valued_archive")
+@Table(name = "tb_valued_archive")
 public class ArchiveValued extends Value{
     @OneToOne(cascade = CascadeType.ALL)
     private Archive archive;

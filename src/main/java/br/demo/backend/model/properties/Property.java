@@ -20,7 +20,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Table(name = "property")
+@Table(name = "tb_property")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Property {
     @GeneratedValue(strategy = GenerationType.IDENTITY)

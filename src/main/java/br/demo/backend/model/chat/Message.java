@@ -23,7 +23,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "message")
+@Table(name = "tb_message")
 public class Message {
 
     @Id

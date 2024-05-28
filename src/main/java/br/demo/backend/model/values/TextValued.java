@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "valued_text")
+@Table(name = "tb_valued_text")
 public class TextValued extends Value {
     private String text;
 

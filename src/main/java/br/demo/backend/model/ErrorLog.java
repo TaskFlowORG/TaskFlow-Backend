@@ -12,6 +12,7 @@ import java.time.OffsetDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Table(name = "tb_error_log")
 public class ErrorLog {
 
     @Id

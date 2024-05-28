@@ -14,7 +14,7 @@ import lombok.*;
 @Entity
 @Builder
 @ToString(onlyExplicitlyIncluded = true)
-@Table(name = "notification")
+@Table(name = "tb_notification")
 
 public class Notification  {
     @Id

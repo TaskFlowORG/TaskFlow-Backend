@@ -15,7 +15,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @Entity
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "select")
+@Table(name = "tb_select")
 public class Select extends Property {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "select_id")

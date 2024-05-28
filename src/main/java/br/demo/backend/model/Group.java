@@ -11,7 +11,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Table(name = "group")
+@Table(name = "tb_group")
 
 public class Group {
 

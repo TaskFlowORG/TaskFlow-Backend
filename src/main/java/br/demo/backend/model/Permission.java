@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "permission")
+@Table(name = "tb_permission")
 public class Permission {
     @Id
     @GeneratedValue

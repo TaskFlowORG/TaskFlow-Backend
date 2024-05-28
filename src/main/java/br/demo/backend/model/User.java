@@ -21,7 +21,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Table(name = "user")
+@Table(name = "tb_user")
 public class User {
 
     @Id

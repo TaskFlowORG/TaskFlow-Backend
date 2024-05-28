@@ -19,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Table(name = "interval")
+@Table(name = "tb_interval")
 @Data
 public class Intervals {
     @Id

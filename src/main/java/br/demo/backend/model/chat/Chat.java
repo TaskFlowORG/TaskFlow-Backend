@@ -16,7 +16,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Table(name = "chat")
+@Table(name = "tb_chat")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Chat {
 

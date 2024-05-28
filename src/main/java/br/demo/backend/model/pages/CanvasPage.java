@@ -17,7 +17,7 @@ import java.util.Collection;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "canvas_page")
+@Table(name = "tb_canvas_page")
 //CANVAS
 public class CanvasPage extends Page {
 

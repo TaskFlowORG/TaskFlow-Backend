@@ -17,7 +17,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
-@Table(name = "ordered_page")
+@Table(name = "tb_ordered_page")
 
 //KANBAN, TIMELINE, CALENDAR
 public class OrderedPage extends Page {

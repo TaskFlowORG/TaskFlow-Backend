@@ -20,7 +20,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @Entity
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "limited")
+@Table(name = "tb_limited")
 public class Limited extends Property {
     private Long maximum;
 

@@ -21,7 +21,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @Entity
 @ToString(onlyExplicitlyIncluded = true)
-@Table(name = "project")
+@Table(name = "tb_project")
 public class Project implements ILogged, IHasProperties {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

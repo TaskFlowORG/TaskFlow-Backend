@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Table(name = "destination")
+@Table(name = "tb_destination")
 public class Destination {
 
     @EqualsAndHashCode.Include

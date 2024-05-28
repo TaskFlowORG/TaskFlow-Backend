@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "task_canvas")
+@Table(name = "tb_task_canvas")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

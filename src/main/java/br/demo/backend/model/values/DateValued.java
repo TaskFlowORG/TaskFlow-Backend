@@ -15,7 +15,7 @@ import java.time.OffsetDateTime;
 @AllArgsConstructor
 @Entity
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "valued_date")
+@Table(name = "tb_valued_date")
 public class DateValued extends Value{
     @OneToOne(cascade = CascadeType.ALL)
     private DateWithGoogle date;
