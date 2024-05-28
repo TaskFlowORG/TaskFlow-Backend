@@ -3,6 +3,7 @@ package br.demo.backend.security.service;
 import br.demo.backend.model.Code;
 import br.demo.backend.model.User;
 import br.demo.backend.repository.UserRepository;
+import br.demo.backend.security.entity.UserDatailEntity;
 import br.demo.backend.security.utils.CookieUtil;
 import br.demo.backend.service.EmailService;
 import jakarta.servlet.http.Cookie;
@@ -34,10 +35,7 @@ public class AuthenticationService implements UserDetailsService {
 
         Optional<User> userOptional = userRepository.findByUserDetailsEntity_Username(username);
         if (userOptional.isPresent()) {
-            User userGet = userOptional.get();
-            userGet.getUserDetailsEntity().setEnabled(true);
-            userRepository.save(userGet);
-            return userGet.getUserDetailsEntity();
+            return getUserDatailEntity(userOptional);
         }else {
             throw new UsernameNotFoundException("User not found");
         }
@@ -47,10 +45,7 @@ public class AuthenticationService implements UserDetailsService {
 
         Optional<User> userOptional = userRepository.findByUserDetailsEntity_UsernameGitHub(username);
         if (userOptional.isPresent()) {
-            User userGet = userOptional.get();
-            userGet.getUserDetailsEntity().setEnabled(true);
-            userRepository.save(userGet);
-            return userGet.getUserDetailsEntity();
+            return getUserDatailEntity(userOptional);
         }else {
             throw new UsernameNotFoundException("User not found");
         }
@@ -59,13 +54,17 @@ public class AuthenticationService implements UserDetailsService {
     public UserDetails loadByEmail(String email) throws UsernameNotFoundException{
         Optional<User> userOptional = userRepository.findByMail(email);
         if (userOptional.isPresent()) {
-            User userGet = userOptional.get();
-            userGet.getUserDetailsEntity().setEnabled(true);
-            userRepository.save(userGet);
-            return userGet.getUserDetailsEntity();
+            return getUserDatailEntity(userOptional);
         }else {
             throw new UsernameNotFoundException("User not found");
         }
+    }
+
+    private UserDatailEntity getUserDatailEntity(Optional<User> userOptional) {
+        User userGet = userOptional.get();
+        userGet.getUserDetailsEntity().setEnabled(true);
+        userRepository.save(userGet);
+        return userGet.getUserDetailsEntity();
     }
 
     public List<Cookie> removeCookies (HttpServletRequest request){
