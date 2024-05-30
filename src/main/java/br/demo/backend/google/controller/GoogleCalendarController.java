@@ -50,7 +50,7 @@ public class GoogleCalendarController {
             try {
                 UserDatailEntity userId = ((UserDatailEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
                 Credential credential = service.exchangeCodeForToken(code, userId);
-                response.sendRedirect("http://localhost:3000");
+                response.sendRedirect("http://localhost:3000/home");
                 return ResponseEntity.ok("Bem-sucedido");
             } catch (IOException | GeneralSecurityException e) {
                 e.printStackTrace();

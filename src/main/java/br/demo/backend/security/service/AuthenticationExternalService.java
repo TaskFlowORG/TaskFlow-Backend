@@ -211,7 +211,7 @@ public class AuthenticationExternalService {
             if (user.isPresent() && user.get().getUserDetailsEntity().isLinkedWithGitHub() && user.get().getUserDetailsEntity().getUsernameGitHub().equals(username)) {
                 newCookie = loginWithExternalService(request, response, username);
                 response.addCookie(newCookie); // Add the cookie to the response
-                response.sendRedirect("http://localhost:3000/" + user.get().getUserDetailsEntity().getUsername());
+                response.sendRedirect("http://localhost:3000/home");
             } else {
                 throw new UsernameNotFoundException("User not found");
             }
@@ -226,7 +226,7 @@ public class AuthenticationExternalService {
                 newCookie = loginWithExternalService(request, response, username);
             }
             response.addCookie(newCookie); // Add the cookie to the response
-            response.sendRedirect("http://localhost:3000/" + returnUsername);
+            response.sendRedirect("http://localhost:3000/home");
         }
     }
 
@@ -241,7 +241,7 @@ public class AuthenticationExternalService {
                 throw new UsernameNotFoundException("User not found");
             }
             response.addCookie(newCookie);
-            response.sendRedirect("http://localhost:3000/" + userOptional.get().getUserDetailsEntity().getUsername());
+            response.sendRedirect("http://localhost:3000/home");
         } catch (UsernameNotFoundException e) {
             String picture = oAuth2User.getAttribute("picture");
             if (!userOptional.isPresent()) {
@@ -252,7 +252,7 @@ public class AuthenticationExternalService {
                 newCookie = loginWithGoogle(request, response, email);
             }
             response.addCookie(newCookie); // Add the cookie to the response
-            response.sendRedirect("http://localhost:3000/" + returnUsername);
+            response.sendRedirect("http://localhost:3000/home");
         }
     }
 }
