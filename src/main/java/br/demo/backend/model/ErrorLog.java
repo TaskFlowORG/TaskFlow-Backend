@@ -19,8 +19,10 @@ public class ErrorLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 999999999)
     private String exceptionMessage;
     private OffsetDateTime timestamp;
+    @Column(length = 999999999)
     private String stackTrace;
 
     public ErrorLog(Exception e) {
