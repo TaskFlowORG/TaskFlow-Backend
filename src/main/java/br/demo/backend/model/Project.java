@@ -42,9 +42,9 @@ public class Project implements ILogged, IHasProperties {
     @JoinColumn(nullable = false)
     @ToString.Exclude
     private User owner;
-    @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private Collection<Page> pages;
-    @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private Collection<Property> properties;
     //===================== Adições
     @OneToMany(cascade = CascadeType.ALL)

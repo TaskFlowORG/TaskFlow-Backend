@@ -34,15 +34,15 @@ public class Page implements IHasProperties {
     private TypeOfPage type;
 
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "page_id")
     private Collection<TaskPage> tasks;
 
 
-    @ManyToMany(mappedBy = "pages", cascade = CascadeType.REMOVE)
+    @ManyToMany(mappedBy = "pages", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private Collection<Property> properties;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @NotNull
     @JoinColumn(nullable = false, updatable = false)
     private Project project;
