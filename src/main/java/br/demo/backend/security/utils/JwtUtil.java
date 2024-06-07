@@ -9,7 +9,8 @@ import java.util.Date;
 public class JwtUtil {
 
     public String gerarToken(UserDetails userDetails){
-        return JWT.create().withIssuer("WEG")
+        return JWT.create()
+                .withIssuer("WEG")
                 .withIssuedAt(new Date())
                 .withExpiresAt(new Date(new Date().getTime() + 30*60*1000))
                 .withSubject(userDetails.getUsername())
